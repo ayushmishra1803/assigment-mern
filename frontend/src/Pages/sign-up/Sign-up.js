@@ -4,13 +4,14 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import * as React from "react";
 import { UserContext } from "../../context/User.context";
+import { useHistory } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const SignUp = () => {
   const { userData, setUserData } = useContext(UserContext);
-
+const history=useHistory()
   const [snackShowBar, setShowSnackBar] = useState(false);
   const [fromValues, setFormValues] = useState({
     name: "",
@@ -77,12 +78,13 @@ const SignUp = () => {
     fromSignUpService
       .SignUp(data)
       .then((success) => {
-        /* navigate */
+      
         setShowSnackBar(true);
         setTimeout(() => {
           setShowSnackBar(false);
         }, 3000);
       })
+      history.push('/login')
       .catch((err) => {
         setFormValues((state) => {
           return { ...state, errorMessage: err.response.data.message };

@@ -45,9 +45,10 @@ const Order = () => {
                   <h2 className="h5">Total Price : {item.order_price}</h2>
                 </section>
                 <div>
-                  {item.product_item.map((product) => {
+                  {item.product_item.map((product,indecx) => {
+                  
                     return (
-                      <CartItems cart={product} hideButtons={true}></CartItems>
+                      <CartItems cart={product} hideButtons={true} key={indecx}></CartItems>
                     );
                   })}
                 </div>

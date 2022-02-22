@@ -75,14 +75,14 @@ const ProductCard = (props) => {
               >
                 Edit
               </button>
-              <button
+              {/* {<button
                 className="btn btn-danger"
                 onClick={() => {
                   deleteProduct(props.product._id);
                 }}
               >
                 Delete
-              </button>
+              </button>} */}
             </div>
           ) : (
             <button

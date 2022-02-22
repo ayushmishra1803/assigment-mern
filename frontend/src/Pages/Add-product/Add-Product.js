@@ -59,7 +59,7 @@ const AddProduct = () => {
     fromProductService
       .AddProduct(data, header)
       .then((success) => {
-        onSubmitHandler({
+        setFormValues({
           product_details: "",
           product_image: "",
           product_name: "",

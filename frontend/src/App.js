@@ -6,7 +6,7 @@ import { Route, Switch, Link, BrowserRouter as Router } from "react-router-dom";
 import { UserContext } from "./context/User.context";
 import { useState } from "react";
 import Home from "./Pages/Home/Home";
-import ToolBar from "./Components/Toolbar"; 
+import ToolBar from "./Components/Toolbar";
 import AddProduct from "./Pages/Add-product/Add-Product";
 import Cart from "./Pages/Cart/Cart";
 import Order from "./Pages/Order/Order";
@@ -45,10 +45,12 @@ function App() {
           <Route path="/home">
             <Home />
           </Route>
-          <Route path="/product/:id">
-            <EditProduct />
-          </Route>
-          <Route path="/create-product">{ <AddProduct />}</Route>
+
+          <Route
+            path="/product/:id"
+            render={(props) => <EditProduct {...props} />}
+          />
+          <Route path="/create-product">{<AddProduct />}</Route>
         </Switch>
       );
       /* if user is admin */
@@ -61,7 +63,7 @@ function App() {
           <Route path="/cart">
             <Cart />
           </Route>
-         
+
           <Route path="/order">
             <Order />
           </Route>

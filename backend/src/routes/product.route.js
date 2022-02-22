@@ -66,4 +66,16 @@ ProductRoutes.patch(`/product/:id`, AdminAuthGuard, async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+ProductRoutes.get(`/product/:id`, AdminAuthGuard, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const product = await ProductModel.findById(id);
+    if (!product) {
+      throw new Error("Invalid product ID");
+    }
+    res.status(200).send({ message: "Product Fetched", data: product });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
 module.exports = ProductRoutes;

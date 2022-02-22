@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import * as fromLoginService from "./service/login.service";
 import classes from "./login.module.css";
+import { useHistory } from "react-router-dom";
 
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import * as React from "react";
+import { UserContext } from "../../context/User.context";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const Login = () => {
+  let history = useHistory();
+
+  const { userData, setUserData } = useContext(UserContext);
+
   const [fromValues, setFormValues] = useState({
     email: "",
     password: "",
     invalid: true,
     errorMessage: "",
   });
+
   const [snackShowBar, setShowSnackBar] = useState(false);
   const enterEmailHandler = (event) => {
     const email = event.target.value;
@@ -50,7 +57,9 @@ const Login = () => {
     fromLoginService
       .Login(data)
       .then((success) => {
-        /* navigate */
+        localStorage.setItem("userData", JSON.stringify(success.data.data));
+        setUserData(success.data.data);
+        history.push("/home");
         setShowSnackBar(true);
         setTimeout(() => {
           setShowSnackBar(false);
@@ -58,7 +67,12 @@ const Login = () => {
       })
       .catch((err) => {
         setFormValues((state) => {
-          return { ...state, errorMessage: err.response.data.message };
+          return {
+            ...state,
+            errorMessage: err.response?.data?.message
+              ? err.response?.data?.message
+              : "Try again",
+          };
         });
       });
   };

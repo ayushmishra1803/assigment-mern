@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import * as fromSignUpService from "./service/sign-up.service";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import * as React from "react";
+import { UserContext } from "../../context/User.context";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const SignUp = () => {
+  const { userData, setUserData } = useContext(UserContext);
+
   const [snackShowBar, setShowSnackBar] = useState(false);
   const [fromValues, setFormValues] = useState({
     name: "",
